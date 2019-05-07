@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tvshow_shadow_home_screen"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvshowimage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvshowimage">
+
+        <TextView
+            android:id="@+id/horizontal_tvshowsubtext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:elevation="10dp"
+            android:lineSpacingExtra="8sp"
+            android:paddingLeft="5dp"
+            android:paddingRight="10dp"
+            android:text="TextView"
+            android:textAlignment="viewStart"
+            android:textColor="@color/contrastingColor"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/classificationView"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/classificationView"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/g" />
+    </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/tvshowimage"
+        android:layout_width="146dp"
+        android:layout_height="85dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:transitionName="opentvshow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvshowsubtext"
+        app:layout_constraintHorizontal_bias="0.143"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/deadlock" />
+
+</android.support.constraint.ConstraintLayout>

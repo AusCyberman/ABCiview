@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_show_test"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".activities.TVShowActivity">
+
+
+    <ScrollView
+        android:id="@+id/mainTVLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:scrollbarStyle="insideOverlay"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/top_tvshow"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:background="@drawable/tvshow_shadow_inverted"
+                android:elevation="3dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvshowtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+
+                android:layout_marginEnd="8dp"
+                android:elevation="5dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+
+                android:text="Deadlock"
+                android:textColor="@color/contrastingColor"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="@id/tvshowImage"
+                app:layout_constraintEnd_toStartOf="@+id/favourite_star"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/trailer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_corners"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvshowdescription">
+
+                <ImageView
+                    android:id="@+id/play2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:elevation="51dp"
+                    android:src="@android:drawable/ic_media_play"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/trailer_image"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/trailer_image" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="Trailer"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/trailer_image"
+                    android:layout_width="173dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2"
+                    app:srcCompat="@drawable/deadlock" />
+            </android.support.constraint.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvshowdescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="TextView"
+                android:textColor="@color/contrastingColor"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/channel_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/classification" />
+
+            <ImageView
+                android:id="@+id/tv_show_back"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:elevation="50dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow_back_white_24dp" />
+
+            <ImageView
+                android:id="@+id/channel_image"
+                android:layout_width="100dp"
+                android:layout_height="87dp"
+
+                android:elevation="5dp"
+                android:transitionName="tvshowchannel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvshowtitle"
+                app:srcCompat="@drawable/ic_abc" />
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/tvshow_shadow"
+                android:elevation="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvshowtitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvshowtitle">
+
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/favourite_star"
+                android:layout_width="41dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="4dp"
+                android:elevation="100dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvshowtitle"
+                app:layout_constraintEnd_toStartOf="@+id/channel_image"
+                app:layout_constraintTop_toTopOf="@+id/frameLayout"
+                app:srcCompat="@drawable/ic_star_white_24dp" />
+
+            <ImageView
+                android:id="@+id/play"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:elevation="51dp"
+                android:src="@android:drawable/ic_media_play"
+                app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/classification"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:elevation="15dp"
+                app:layout_constraintBottom_toTopOf="@+id/tvshowdescription"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvshowtitle"
+                app:srcCompat="@drawable/m" />
+
+            <ImageView
+                android:id="@+id/tvshowImage"
+                android:layout_width="1200px"
+                android:layout_height="675px"
+                android:layout_gravity="bottom"
+                android:elevation="1dp"
+                android:src="@drawable/deadlock"
+                android:transitionName="opentvshow" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/tvshow_episode_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+
+                app:layout_constraintTop_toBottomOf="@id/trailer" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="@color/colorPrimaryDark"
+        app:itemIconTint="@color/navview"
+        app:itemTextColor="@color/navview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation" />
+</android.support.constraint.ConstraintLayout>

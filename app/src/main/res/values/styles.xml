@@ -1,0 +1,49 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="autoCompleteTextViewStyle">@style/SearchAutoCompleteTextView</item>
+        <item name="searchViewStyle">@style/SearchViewStyle</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
+
+    </style>
+    <style name="NavView" parent="Widget.Design.BottomNavigationView">
+        <item name="android:colorBackground">@color/colorPrimaryDark</item>
+        <item name="android:colorPrimaryDark">@color/contrastingColor</item>
+
+    </style>
+    <style name="SearchAutoCompleteTextView" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:textColor">@color/contrastingColor</item>
+        <item name="android:textColorHint" >@color/contrastingColor</item>
+
+    </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- Gets rid of the search icon -->
+        <item name="searchIcon">@drawable/ic_search_white_24dp</item>
+        <!-- Gets rid of the "underline" in the text -->
+        <!-- Gets rid of the search icon when the SearchView is expanded -->
+        <item name="closeIcon"  >@drawable/ic_close_white_24dp</item>
+
+        <item name="submitBackground">@drawable/ic_chevron_right_white_24dp</item>
+        <item name="searchHintIcon">@null</item>
+        <!-- The hint text that appears when the user has not typed anything -->
+        <item name="queryHint">@string/search_hint</item>
+
+    </style>
+    <style name="CustomPlay">
+        <item name="android:src">@drawable/exo_controls_play</item>
+
+        <item name="android:contentDescription">@string/exo_controls_play_description</item>
+    </style>
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    <!-- Optional, on Android 5+ you can modify the colorPrimaryDark color to match the windowBackground color for further branding-->
+    <!-- <item name="colorPrimaryDark">@android:color/white</item> -->
+</style>
+</resources>
