@@ -91,9 +91,9 @@ public class EpisodeTVShowAdapter extends RecyclerView.Adapter<EpisodeTVShowAdap
 
         });
         if(episode.getImage()!=null) {
-            holder.imageView.setImageResource(episode.getImage());
+            holder.imageView.setImageBitmap(episode.getImage());
         }else{
-            holder.imageView.setImageResource(episode.getTVShow().getImage());
+            holder.imageView.setImageBitmap(episode.getTVShow().getImage());
         }
           if(episode.getClassificationImage()==null){
               holder.classificationView.setVisibility(View.GONE);

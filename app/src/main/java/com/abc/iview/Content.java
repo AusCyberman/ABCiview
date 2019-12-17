@@ -3,9 +3,15 @@ package com.abc.iview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.SparseArray;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 import at.huber.youtubeExtractor.VideoMeta;
@@ -22,7 +28,7 @@ public class Content{
     private  Integer id =0;
     private String name="Deadlock";
     private String description="DEADLOCK crashes though the incredible highs, heartbreak, camaraderie, laughs and bittersweet sorrow of what it is to be a teenager. \n When a mysterious car crash exposes the dark underbelly of an idyllic paradise, it dramatically changes the lives of the teens it touches.";
-    private Integer image = R.drawable.deadlock;
+    private Bitmap image;
     private String channel = "abc";
     private String classification = "m";
     private Boolean isPopular = false;
@@ -105,12 +111,13 @@ public class Content{
         this.description = description;
     }
 
-    public Integer getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(Integer image) {
-        this.image = image;
+    public void setImage(Bitmap image) {
+    this.image=image;
+
     }
 
     public String getChannel() {
@@ -230,7 +237,7 @@ public class Content{
     }
     public class Episode extends Video {
         String Description;
-        Integer image;
+        Bitmap image;
         String classification;
         String name;
         Integer id;
@@ -249,11 +256,11 @@ public class Content{
             return id;
         }
 
-        public void setImage(Integer image) {
-            this.image = image;
+        public void setImage(Bitmap image) {
+            this.image=image;
         }
 
-        public Integer getImage() {
+        public Bitmap getImage() {
             return image;
         }
 

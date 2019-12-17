@@ -12,7 +12,9 @@ public class Startup extends Application {
     public void onCreate(){
         super.onCreate();
 // Place your code here which will be executed only once
-        init(getApplicationContext());
+       init(getApplicationContext());
+
+
     }
 
 }

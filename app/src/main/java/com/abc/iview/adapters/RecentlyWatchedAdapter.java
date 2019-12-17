@@ -126,7 +126,7 @@ ActionMode actionMode;
         Content.TVShow tvShow = session.getTvshow();
         assert tvShow != null;
         System.out.println("Adding "+tvShow.getName());
-        holder.imageView.setImageResource(tvShow.getImage());
+        holder.imageView.setImageBitmap(tvShow.getImage());
         holder.tvshowNameView.setText(tvShow.getName());
         Content.TVShow.Episode episode = ((Content.TVShow.Episode)tvShow.getEpisode(session.getVideo()));
         holder.tvDetails.setText(episode.getName());

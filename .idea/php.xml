@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/Data/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/Data/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/Data/vendor/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/Data/vendor/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/Data/vendor/composer" />
+      <path value="$PROJECT_DIR$/Data/vendor/phpunit/php-token-stream" />
+      <path value="$PROJECT_DIR$/Data/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/Data/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/Data/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/Data/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/Data/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/Data/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/Data/vendor/phpspec/prophecy" />
+      <path value="$PROJECT_DIR$/Data/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/Data/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/Data/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/Data/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/Data/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/Data/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/Data/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/Data/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/Data/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/Data/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/Data/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/Data/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/Data/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/Data/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/Data/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/Data/vendor/webmozart/assert" />
+    </include_path>
+  </component>
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings load_method="PHPUNIT_PHAR" custom_loader_path="$PROJECT_DIR$/vendor/autoload.php" phpunit_phar_path="C:/bin/phpunit.phar" />
+    </phpunit_settings>
+  </component>
+</project>

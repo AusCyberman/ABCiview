@@ -42,6 +42,10 @@ dependencies {
     implementation 'com.github.HaarigerHarald:android-youtubeExtractor:v1.8.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'org.javacord:javacord:3.0.4'
+    implementation "org.apache.httpcomponents:httpcore:4.4.12"
+    implementation "commons-io:commons-io:2.6"
+    implementation 'com.googlecode.json-simple:json-simple:1.1'
+
 }
 repositories {
     mavenCentral()

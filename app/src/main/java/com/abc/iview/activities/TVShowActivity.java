@@ -163,7 +163,8 @@ public class TVShowActivity extends AppCompatActivity {
             trailer.setVisibility(View.VISIBLE);
         }
         ImageView trailerimage = findViewById(R.id.trailer_image);
-        trailerimage.setImageResource(tvShow.getImage());
+        trailerimage.setImageBitmap(tvShow.getImage());
+
 
        ImageView backbutton = findViewById(R.id.tv_show_back);
        backbutton.setImageResource(R.drawable.ic_arrow_back_white_24dp);
@@ -199,7 +200,7 @@ public class TVShowActivity extends AppCompatActivity {
 
         if(tvShow !=null) {
             ImageView tvshowimage = findViewById(R.id.tvshowImage);
-            tvshowimage.setImageResource(tvShow.getImage());
+            tvshowimage.setImageBitmap(tvShow.getImage());
             TextView description = findViewById(R.id.tvshowdescription);
             description.setText(tvShow.getDescription());
             ImageView classification = findViewById(R.id.classification);

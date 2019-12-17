@@ -64,7 +64,7 @@ public class TVShowChannelAdapter extends RecyclerView.Adapter<TVShowChannelAdap
 
         assert tvShow != null;
         System.out.println("Adding "+tvShow.getName());
-        holder.imageView.setImageResource(tvShow.getImage());
+        holder.imageView.setImageBitmap(tvShow.getImage());
         holder.tvshowNameView.setText(tvShow.getName());
         final Integer pos = position;
         final Context context = holder.context;
