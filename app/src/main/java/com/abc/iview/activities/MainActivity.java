@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
     public HashMap<Integer, ImageView> channelImages = new HashMap<Integer, ImageView>();
     public ArrayList<String> channelNames= new ArrayList<String>();
     public static ArrayList<Content.TVShow> tvshows = new ArrayList<>();
+    //public static ArrayList<Integer> tvshows = new ArrayList<>();
     public static ArrayList<Integer> favourites = new ArrayList<Integer>();
     public static boolean darkmode = false;
     public static boolean parentcontrols = false;
@@ -338,7 +339,6 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
                 "Bluey is an inexhaustible six year-old Blue Heeler dog, who loves to play and turns everyday family life into extraordinary adventures, developing her imagination as well as her mental, physical and emotional resilience",
                 true
         );
-
         newTVShow("Melbourne Comedy Festival",
                 "abccomedy",
                 1,

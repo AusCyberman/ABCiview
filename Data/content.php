@@ -30,27 +30,37 @@ if (isset($_GET["contentid"])) {
 
     if (!empty($result)) {
         // check for empty result
+
         if (mysqli_num_rows($result) > 0) {
+            $response["products"] = array();
 
-            $result = mysqli_fetch_array($result);
+            while ($row = mysqli_fetch_array($result)) {
+                // temp user array
+                $product = array();
+                $product["id"] = $row["id"];
+                $product["content_name"] = $row["content_name"];
+                $product["description"] = $row["description"];
+                $product["image"] = $row["image"];
+                $product["channel"] = $row["channel"];
+                $product["classification"] = $row["classification"];
+                $product["adult"] = $row["adult"];
+                $product["created_at"] = $row["created_at"];
+                $product["active"] = $row["active"];
 
-            $product = array();
-            $product["id"] = $result["id"];
-            $product["name"] = $result["name"];
-            $product["price"] = $result["price"];
-            $product["description"] = $result["description"];
-            $product["created_at"] = $result["created_at"];
-            $product["updated_at"] = $result["updated_at"];
+                // push single product into final response array
+                array_push($response["products"], $product);
+            }
             // success
             $response["success"] = 1;
 
-            // user node
-            $response["product"] = array();
-
-            array_push($response["product"], $product);
-
             // echoing JSON response
             echo json_encode($response);
+
+
+
+
+
+
         } else {
             // no product found
             $response["success"] = 0;
