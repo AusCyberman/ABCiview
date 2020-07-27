@@ -2,36 +2,37 @@ package com.abc.iview.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.transition.Fade;
 import android.transition.Slide;
 import android.view.Gravity;
-import android.view.MenuItem;
 import android.widget.ImageView;
 
 
-import com.abc.iview.Content;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.abc.iview.content.Content;
 import com.abc.iview.R;
 
 import com.abc.iview.adapters.MainMenuChannelListAdapter;
 import com.abc.iview.adapters.TVShowChannelAdapter;
+import com.abc.iview.content.TVShow;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
+import static com.abc.iview.content.Content.categories;
 
 public class ChannelActivity extends AppCompatActivity {
 
 
     ImageView channelLogo;
     Boolean newchannel = true;
-    ArrayList<Content.TVShow> alltvshows = MainActivity.tvshows;
-    ArrayList<Content.TVShow> listTVshows = new ArrayList<>();
+    ArrayList<TVShow> alltvshows = MainActivity.tvshows;
+    ArrayList<TVShow> listTVshows = new ArrayList<>();
 
-    ArrayList<Content.TVShow> populartvshows = new ArrayList<>();
+    ArrayList<TVShow> populartvshows = new ArrayList<>();
 
 
 
@@ -209,9 +210,9 @@ public static final String returnfrom = "com.abc.iview.ReturnFrom";
 
 
         allRecyclerView = (RecyclerView) findViewById(R.id.tv_show_recycler);
-        listTVshows = new ArrayList<Content.TVShow>();
-        ArrayList<Content.TVShow> alltvshows = MainActivity.tvshows;
-        populartvshows = new ArrayList<Content.TVShow>();
+        listTVshows = new ArrayList<TVShow>();
+        ArrayList<TVShow> alltvshows = MainActivity.tvshows;
+        populartvshows = new ArrayList<TVShow>();
 
 
 
@@ -230,7 +231,8 @@ public static final String returnfrom = "com.abc.iview.ReturnFrom";
         popRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
 
 
-        for(Content.TVShow tvshow : alltvshows) {
+        for(TVShow tvshow : alltvshows) {
+            if(tvshow!=null){
             System.out.println("The values are " + tvshow.getChannel() + " " + channel);
 
             if (tvshow.getChannel().equals(channel)) {
@@ -248,17 +250,18 @@ public static final String returnfrom = "com.abc.iview.ReturnFrom";
                     }
                 }
             }
-        }
+        }}
 
 
-        ArrayList<String> categories = new ArrayList<String>();
-        for(String category : Content.categories){
 
-            for(Content.TVShow tvshow : alltvshows) {
-
+        //String[][]
+        for(String category : categories){
+            if(category!=null){
+            for(TVShow tvshow : alltvshows) {
+                if(tvshow!=null){
                 if(tvshow.getChannel().equals(channel)){
 
-                    if(Content.categories.indexOf(category) ==tvshow.getCategory()){
+                    if(categories.indexOf(category) ==tvshow.getCategory()){
 
                         if (MainActivity.parentcontrols && tvshow.getAdult()) {
 
@@ -274,7 +277,7 @@ public static final String returnfrom = "com.abc.iview.ReturnFrom";
 
                         }}}
 
-            }
+            }}}
         }
         LinearLayoutManager llm  = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
 

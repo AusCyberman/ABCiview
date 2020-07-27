@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
+
 import android.view.ActionMode;
 
 import android.view.ContextMenu;
@@ -21,12 +18,18 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.abc.iview.Content;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
+import com.abc.iview.content.Content;
 import com.abc.iview.R;
 import com.abc.iview.WatchData;
 import com.abc.iview.activities.MainActivity;
 import com.abc.iview.activities.PlayerActivity;
 import com.abc.iview.activities.TVShowActivity;
+import com.abc.iview.content.TVShow;
+import com.bumptech.glide.Glide;
+
 
 import java.util.ArrayList;
 
@@ -123,19 +126,19 @@ ActionMode actionMode;
         System.out.println(position);
 
         final WatchData.WatchSession session = sessions.get(position);
-        Content.TVShow tvShow = session.getTvshow();
+        TVShow tvShow = session.getTvshow();
         assert tvShow != null;
         System.out.println("Adding "+tvShow.getName());
-        holder.imageView.setImageBitmap(tvShow.getImage());
+        Glide.with(context).load(tvShow.getImage()).into(holder.imageView);
         holder.tvshowNameView.setText(tvShow.getName());
-        Content.TVShow.Episode episode = ((Content.TVShow.Episode)tvShow.getEpisode(session.getVideo()));
+        TVShow.Episode episode = ((TVShow.Episode)tvShow.getEpisode(session.getVideo()));
         holder.tvDetails.setText(episode.getName());
         final Integer pos = position;
         final Context context = holder.context;
 
         holder.info.setOnClickListener(v -> {
             Intent intent = new Intent(context, TVShowActivity.class);
-            for(int i=0;MainActivity.tvshows.size()>i;i++){
+            for(int i=1;MainActivity.tvshows.size()>i;i++){
                 if(tvShow.getName().equals(MainActivity.tvshows.get(i).getName())){
                         intent.putExtra("TVShowPosition",i);
 

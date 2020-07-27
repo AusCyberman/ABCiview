@@ -4,33 +4,33 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.transition.Fade;
+
 import android.transition.Slide;
-import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.abc.iview.Content;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.MotionEventCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.abc.iview.content.Content;
 import com.abc.iview.R;
 
 import com.abc.iview.WatchData;
 import com.abc.iview.adapters.EpisodeTVShowAdapter;
-import com.abc.iview.activities.OnSwipeTouchListener;
+import com.abc.iview.content.TVShow;
+import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
+
+
 import java.util.ArrayList;
 
 import static com.abc.iview.activities.ChannelActivity.returnfrom;
@@ -39,7 +39,7 @@ public class TVShowActivity extends AppCompatActivity {
 
 
 
-    Content.TVShow tvShow;
+    TVShow tvShow;
     Boolean newchannel = true;
     BottomNavigationView navigationView;
     RecyclerView episodes;
@@ -118,7 +118,7 @@ public class TVShowActivity extends AppCompatActivity {
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         System.out.println("Activity started");
         final Intent intent = getIntent();
-        ArrayList<Content.TVShow> tvshows = MainActivity.tvshows;
+        ArrayList<TVShow> tvshows = MainActivity.tvshows;
         tvShow = tvshows.get((Integer) intent.getExtras().get("TVShowPosition"));
         ImageView play = findViewById(R.id.play);
         play.setOnClickListener(v -> {
@@ -126,7 +126,7 @@ public class TVShowActivity extends AppCompatActivity {
             aintent.putExtra("show", (Integer) intent.getExtras().get("TVShowPosition"));
             System.out.println(intent.getExtras().get("TVShowPosition"));
             if(WatchData.getMostRecentSession(tvShow)==null||WatchData.getMostRecentSession(tvShow).didFinish()){
-                if(tvShow.getTrailer().equals(null)){
+                if(tvShow.getTrailer()==null){
                     aintent.putExtra("episode", tvShow.getEpisode(0).getId());
                 }else {
                     aintent.putExtra("isTrailer", true);
@@ -163,7 +163,14 @@ public class TVShowActivity extends AppCompatActivity {
             trailer.setVisibility(View.VISIBLE);
         }
         ImageView trailerimage = findViewById(R.id.trailer_image);
-        trailerimage.setImageBitmap(tvShow.getImage());
+        if (tvShow.getTrailer() != null) {
+            if(tvShow.getTrailer().getImage()!=null) {
+                Glide.with(this).load(tvShow.getTrailer().getImage()).into(trailerimage);
+            }
+
+            }else{
+            Glide.with(this).load(tvShow.getImage()).into(trailerimage);
+        }
 
 
        ImageView backbutton = findViewById(R.id.tv_show_back);
@@ -200,7 +207,8 @@ public class TVShowActivity extends AppCompatActivity {
 
         if(tvShow !=null) {
             ImageView tvshowimage = findViewById(R.id.tvshowImage);
-            tvshowimage.setImageBitmap(tvShow.getImage());
+
+            Glide.with(this).load(tvShow.getImage()).into(tvshowimage);
             TextView description = findViewById(R.id.tvshowdescription);
             description.setText(tvShow.getDescription());
             ImageView classification = findViewById(R.id.classification);
@@ -222,7 +230,7 @@ public class TVShowActivity extends AppCompatActivity {
             }else{
                 favourites.setImageResource(R.drawable.ic_star_border_white_24dp);
             }
-            final Content.TVShow tvs = tvShow;
+            final TVShow tvs = tvShow;
             favourites.setOnClickListener(v -> {
                 if(MainActivity.favourites.contains(MainActivity.tvshows.indexOf(tvs))){
                     favourites.setImageResource(R.drawable.ic_star_border_white_24dp);
@@ -251,7 +259,7 @@ public class TVShowActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         RecyclerView recyclerView=findViewById(R.id.tvshow_episode_recycler);
         recyclerView.setAdapter(new EpisodeTVShowAdapter(tvShow.getEpisodes(),this,false,getIntent().getExtras()));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
         Context context = this;
 
 

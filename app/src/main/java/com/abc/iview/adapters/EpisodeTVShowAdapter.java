@@ -1,12 +1,9 @@
 package com.abc.iview.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +11,21 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.abc.iview.Content;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
+import com.abc.iview.content.Content;
 import com.abc.iview.R;
 
 import com.abc.iview.WatchData;
 import com.abc.iview.activities.MainActivity;
 import com.abc.iview.activities.PlayerActivity;
+import com.abc.iview.content.TVShow;
 
 import java.util.ArrayList;
 
 public class EpisodeTVShowAdapter extends RecyclerView.Adapter<EpisodeTVShowAdapter.EpisodeViewHolder> {
-    ArrayList<Content.TVShow.Episode> episodes;
+    ArrayList<TVShow.Episode> episodes;
 
     //Integer layout;
     //Activity  fromclass;
@@ -63,7 +64,7 @@ public class EpisodeTVShowAdapter extends RecyclerView.Adapter<EpisodeTVShowAdap
     public void onBindViewHolder(@NonNull EpisodeViewHolder holder, int position) {
 
         System.out.println(position);
-        final Content.TVShow.Episode episode = episodes.get(position);
+        final TVShow.Episode episode = episodes.get(position);
 
         assert episode != null;
         System.out.println("Adding "+episode.getName());
@@ -74,7 +75,7 @@ public class EpisodeTVShowAdapter extends RecyclerView.Adapter<EpisodeTVShowAdap
         holder.description.setText(episode.getDescription());
         holder.imageView.setOnClickListener(v -> {
           //  Intent intent = new Intent(context, TVShowActivity.class);
-            for(Content.TVShow tvshow : MainActivity.tvshows){
+            for(TVShow tvshow : MainActivity.tvshows){
                 if(episode.equals(episode)){
                    // intent.putExtra("TVShowPosition",);
                     Intent aintent = new Intent(v.getContext(), PlayerActivity.class);
@@ -90,11 +91,7 @@ public class EpisodeTVShowAdapter extends RecyclerView.Adapter<EpisodeTVShowAdap
             }
 
         });
-        if(episode.getImage()!=null) {
-            holder.imageView.setImageBitmap(episode.getImage());
-        }else{
-            holder.imageView.setImageBitmap(episode.getTVShow().getImage());
-        }
+
           if(episode.getClassificationImage()==null){
               holder.classificationView.setVisibility(View.GONE);
           }else{
@@ -123,7 +120,7 @@ public class EpisodeTVShowAdapter extends RecyclerView.Adapter<EpisodeTVShowAdap
     public int getItemCount() {
         return episodes.size();
     }
-public EpisodeTVShowAdapter(ArrayList<Content.TVShow.Episode> episodes, Context context, Boolean makeTextBlack, Bundle bundle){
+public EpisodeTVShowAdapter(ArrayList<TVShow.Episode> episodes, Context context, Boolean makeTextBlack, Bundle bundle){
     this.episodes= episodes;
     this.isTextBlack=makeTextBlack;
    // this.layout = layout;

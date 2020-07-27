@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_container"
@@ -9,14 +9,14 @@
     tools:context=".activities.ChannelActivity">
 
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/popular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintTop_toBottomOf="@+id/channel_image"
-        tools:layout_editor_absoluteX="140dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/popular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@+id/channel_image"
+            tools:layout_editor_absoluteX="140dp" tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/popular_text"
@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/popular_tv_show_recycler"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,9 +39,9 @@
             android:scrollbars="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/popular_text" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tv_show_recycler"
 
 
@@ -72,7 +72,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <android.support.design.widget.BottomNavigationView
+    <om.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -87,4 +87,4 @@
         app:menu="@menu/navigation" />
 
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

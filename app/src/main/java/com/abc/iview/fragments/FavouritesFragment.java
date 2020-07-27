@@ -4,20 +4,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.abc.iview.Content;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.abc.iview.content.Content;
 import com.abc.iview.R;
 import com.abc.iview.activities.MainActivity;
 import com.abc.iview.adapters.TVShowChannelAdapter;
+import com.abc.iview.content.TVShow;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 
@@ -91,7 +92,7 @@ public class FavouritesFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_favourites, container, false);
 
         RecyclerView favourites = v.findViewById(R.id.favourite_reyclcer);
-        ArrayList<Content.TVShow> favouritesarray = new ArrayList<>();
+        ArrayList<TVShow> favouritesarray = new ArrayList<>();
         for(Integer number : MainActivity.favourites){
             favouritesarray.add(MainActivity.tvshows.get(number));
         }

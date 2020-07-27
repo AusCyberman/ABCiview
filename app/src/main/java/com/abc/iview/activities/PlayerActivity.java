@@ -1,34 +1,20 @@
-/*
- * Copyright (C) 2017 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 package com.abc.iview.activities;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.se.omapi.Session;
-import android.support.v7.app.AppCompatActivity;
+
 import android.view.View;
 
-import com.abc.iview.Content;
+import androidx.appcompat.app.AppCompatActivity;
+import com.abc.iview.content.Content;
 import com.abc.iview.R;
 
 import com.abc.iview.WatchData;
+import com.abc.iview.content.TVShow;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -42,28 +28,24 @@ import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
-import com.google.android.exoplayer2.ui.PlayerControlView;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-import com.google.android.exoplayer2.video.VideoListener;
 
-/**
- * A fullscreen activity to play audio or video streams.
- */
+
 public class PlayerActivity extends AppCompatActivity {
     private boolean tvshowdone = false;
     private SimpleExoPlayer player;
     private PlayerView playerView;
     private Content.Video video;
     private boolean isTrailer = false;
-    private Content tvshow;
+    private TVShow tvshow;
     private long playbackPosition;
     private int currentWindow;
     private boolean playWhenReady = true;
     boolean alreadySetPosition = false;
     private Uri uri;
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -88,7 +70,7 @@ public class PlayerActivity extends AppCompatActivity {
                 isTrailer=true;
             }else{
 
-                video = ((Content.TVShow)tvshow).getEpisode((Integer) intent.getExtras().get("episode"));
+                video = ((TVShow)tvshow).getEpisode((Integer) intent.getExtras().get("episode"));
                 System.out.println("Uri is"+video.getUri());
             }
 
@@ -146,7 +128,7 @@ public class PlayerActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         if (Util.SDK_INT <= 23) {
-            WatchData.WatchSession session = new WatchData.WatchSession(((Content.TVShow)video.getTVShow()).getEpisodes().indexOf(video), (Content.TVShow) video.getTVShow());
+            WatchData.WatchSession session = new WatchData.WatchSession(((TVShow)video.getTVShow()).getEpisodes().indexOf(video), (TVShow) video.getTVShow());
             session.setTotalLength(player.getDuration());
             session.commit(player.getCurrentPosition());
             System.out.println(player.getCurrentPosition());
@@ -166,12 +148,12 @@ public class PlayerActivity extends AppCompatActivity {
                 System.out.println(total);
                 System.out.println("% through is " + (player.getCurrentPosition() / player.getDuration()) * 100);
                 if(tvshowdone){
-                WatchData.WatchSession session = new WatchData.WatchSession(((Content.Episode) video).getId(), (Content.TVShow) tvshow);
+                WatchData.WatchSession session = new WatchData.WatchSession(((Content.Episode) video).getId(), tvshow);
                 session.finish();
 
             } else if (player.getCurrentPosition()>10000){
 
-                    WatchData.WatchSession session = new WatchData.WatchSession(((Content.TVShow)video.getTVShow()).getEpisodes().indexOf(video), (Content.TVShow) video.getTVShow());
+                    WatchData.WatchSession session = new WatchData.WatchSession(((TVShow)video.getTVShow()).getEpisodes().indexOf(video), (TVShow) video.getTVShow());
                     session.setTotalLength(player.getDuration());
                     session.commit(player.getCurrentPosition());
 
@@ -191,7 +173,7 @@ public class PlayerActivity extends AppCompatActivity {
         super.onBackPressed();
         exit(findViewById(R.id.tv_show_back));
     }
-
+    public static Uri turi;
     Intent intent;
     private void initializePlayer() {
 
@@ -226,10 +208,10 @@ public class PlayerActivity extends AppCompatActivity {
                         System.out.println("Next ep");
                         if(tvshow.CONTENT_TYPE=="TVSHOW"&isTrailer==false) {
                             System.out.println("Next ep");
-                            if (!(((Content.TVShow)tvshow).getEpisodes().size()==((Content.Episode)video).getId())){
+                            if (!(((TVShow)tvshow).getEpisodes().size()==((Content.Episode)video).getId())){
                                 System.out.println("Next ep");
                                 releasePlayer();
-                                video=((Content.TVShow) tvshow).getEpisode(((Content.Episode)video).getId()+1);
+                                video=((TVShow) tvshow).getEpisode(((Content.Episode)video).getId()+1);
                                 initializePlayer();
 
                             }else{
@@ -278,8 +260,7 @@ public class PlayerActivity extends AppCompatActivity {
 
 
 
-
-        mediaSource=buildMediaSource(video.getUri());
+        mediaSource=buildMediaSource(turi);
 
 
 
@@ -287,7 +268,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         if(isTrailer==false){
             System.out.println("Not trailer");
-            WatchData.WatchSession session = WatchData.getMostRecentSession(((Content.TVShow.Episode)video).getId(),video.getTVShow().getId());
+            WatchData.WatchSession session = WatchData.getMostRecentSession(((TVShow.Episode)video).getId(),video.getTVShow().getId());
             if(session!=null&&!session.didFinish()) {
 
                 player.seekTo(currentWindow, session.getProgress());

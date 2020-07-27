@@ -5,23 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.abc.iview.Content;
-import com.abc.iview.Content.TVShow;
+import androidx.fragment.app.Fragment;
+import com.abc.iview.content.TVShow;
 import com.abc.iview.R;
 import com.abc.iview.activities.ChannelActivity;
 import com.abc.iview.activities.MainActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import static com.abc.iview.activities.MainActivity.channelNameVar;
 import static com.abc.iview.activities.MainActivity.parentcontrols;
 
 
@@ -95,10 +92,11 @@ public class ChannelsFragment extends Fragment {
         //((BottomNavigationView)((Activity)view.getContext()).findViewById(R.id.navigation)).setSelectedItemId(R.id.navigation_channels);
         ArrayList<String> channels = new ArrayList<>();
         for(TVShow tvshow : MainActivity.tvshows){
+            if(tvshow!=null){
             if(!(parentcontrols&tvshow.getAdult())){
                 channels.add(tvshow.getChannel());
             }
-        }
+        }}
         view.findViewById(R.id.abc).setVisibility(View.GONE);
         view.findViewById(R.id.abccomedy).setVisibility(View.GONE);
         view.findViewById(R.id.abcme).setVisibility(View.GONE);

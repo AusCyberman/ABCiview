@@ -1,26 +1,17 @@
-package com.abc.iview;
+package com.abc.iview.content;
 
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.util.SparseArray;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
-import at.huber.youtubeExtractor.VideoMeta;
-import at.huber.youtubeExtractor.YouTubeExtractor;
-import at.huber.youtubeExtractor.YtFile;
+import com.abc.iview.R;
 
 public class Content{
-    public static ArrayList<String> categories = new ArrayList<String>();
-    public static ArrayList<String> channels = new ArrayList<String>();
+
+    public static ArrayList<String> categories = new ArrayList<>();
+    public static ArrayList<String> channels = new ArrayList<>();
     public String CONTENT_TYPE="CONTENT";
 
 
@@ -28,7 +19,7 @@ public class Content{
     private  Integer id =0;
     private String name="Deadlock";
     private String description="DEADLOCK crashes though the incredible highs, heartbreak, camaraderie, laughs and bittersweet sorrow of what it is to be a teenager. \n When a mysterious car crash exposes the dark underbelly of an idyllic paradise, it dramatically changes the lives of the teens it touches.";
-    private Bitmap image;
+    private String image;
     private String channel = "abc";
     private String classification = "m";
     private Boolean isPopular = false;
@@ -111,11 +102,11 @@ public class Content{
         this.description = description;
     }
 
-    public Bitmap getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Bitmap image) {
+    public void setImage(String image) {
     this.image=image;
 
     }
@@ -200,35 +191,27 @@ public class Content{
 
     public static class Video {
         Content content;
-
-        Uri turi;
+        String image;
+        String turi;
 
         @SuppressLint("StaticFieldLeak")
         public Video(Content tvshow, String URL, Context context){
             this.content =tvshow;
 
-            new YouTubeExtractor(context) {
-                @Override
-                public void onExtractionComplete(SparseArray<YtFile> ytFiles, VideoMeta vMeta) {
-                    if (ytFiles != null) {
 
-                        for(int itag=22;itag<44;itag++) {
-                            if(ytFiles.get(itag)!=null) {
-                                turi = Uri.parse(ytFiles.get(itag).getUrl());
-                                return;
-                            }
-                        }
-
-                    }
-                }
-            }.extract(URL, true, true);
             System.out.println("URL IS "+turi);
         }
         public Content getTVShow(){
             return content;
         }
+        public void setImage(String image) {
+            this.image=image;
+        }
 
-        public Uri getUri() {
+        public String getImage() {
+            return image;
+        }
+        public String getUri() {
 
             return turi;
         }
@@ -237,7 +220,7 @@ public class Content{
     }
     public class Episode extends Video {
         String Description;
-        Bitmap image;
+
         String classification;
         String name;
         Integer id;
@@ -256,13 +239,7 @@ public class Content{
             return id;
         }
 
-        public void setImage(Bitmap image) {
-            this.image=image;
-        }
 
-        public Bitmap getImage() {
-            return image;
-        }
 
         public String getName() {
             return name;
@@ -289,35 +266,7 @@ public class Content{
             }
             return null;
         }
-    }
-
-public static class TVShow extends Content{
-
-    private ArrayList<Episode> episodes= new ArrayList<>();
-    public ArrayList<Episode> getEpisodes() {
-        return episodes;
-    }
-    public Episode getEpisode(Integer id){
-        return episodes.get(id);
-    }
+    }}
 
 
-
-    public Episode addEpisode(Context context, String name, String description, String classification, String url) {
-        Episode episode = new Episode(context,this,url,name,description,classification);
-        episode.setId(episodes.size());
-        episodes.add(episode);
-
-        return episode;
-    }
-    public TVShow(String TVShow, Integer category) {
-
-
-        super(TVShow, category,"TVSHOW");
-
-    }
-}
-
-
-    }
 

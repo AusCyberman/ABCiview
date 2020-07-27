@@ -1,32 +1,27 @@
 package com.abc.iview.fragments;
 
 import android.app.Activity;
-import android.app.SearchManager;
 import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.ImageView;
 
-
-import com.abc.iview.Content;
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.abc.iview.content.Content;
 import com.abc.iview.R;
 
 import com.abc.iview.activities.MainActivity;
 import com.abc.iview.adapters.TVShowChannelAdapter;
+import com.abc.iview.content.TVShow;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
@@ -92,7 +87,7 @@ public class SearchFragment extends Fragment {
         }}
     }
 
-    final ArrayList<Content.TVShow> tvShowsQuery = new ArrayList<>();
+    final ArrayList<TVShow> tvShowsQuery = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -117,7 +112,7 @@ public class SearchFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 tvShowsQuery.clear();
-                for(Content.TVShow tvshow : MainActivity.tvshows){
+                for(TVShow tvshow : MainActivity.tvshows){
                     if(!(MainActivity.parentcontrols&&tvshow.getAdult())) {
                         if (tvshow.getName().toLowerCase().contains(query.toLowerCase()) || tvshow.getDescription().toLowerCase().contains(query.toLowerCase())) {
                             tvShowsQuery.add(tvshow);
@@ -138,7 +133,7 @@ public class SearchFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 tvShowsQuery.clear();
-                for(Content.TVShow tvshow : MainActivity.tvshows){
+                for(TVShow tvshow : MainActivity.tvshows){
                     if(!(MainActivity.parentcontrols&&tvshow.getAdult())) {
                         if (tvshow.getName().toLowerCase().contains(newText.toLowerCase()) || tvshow.getDescription().toLowerCase().contains(newText.toLowerCase())) {
                             tvShowsQuery.add(tvshow);

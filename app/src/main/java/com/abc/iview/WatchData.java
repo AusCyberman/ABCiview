@@ -1,21 +1,14 @@
 package com.abc.iview;
 
-import android.media.tv.TvContentRating;
-import android.se.omapi.Session;
-
 import com.abc.iview.activities.MainActivity;
+import com.abc.iview.content.Content;
+import com.abc.iview.content.TVShow;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static java.util.Comparator.comparing;
-import static java.util.Comparator.reverseOrder;
 
 public class WatchData {
 
@@ -38,7 +31,7 @@ public class WatchData {
         }
 
 
-        for (int i=0;i<Content.categories.size();i++) {
+        for (int i = 0; i< Content.categories.size(); i++) {
             Integer category = i;
             for (int x=0;x<allCategories.size();x++) {
                 Integer allcat = allCategories.get(x);
@@ -90,7 +83,7 @@ public class WatchData {
     public static class WatchSession{
 
         private boolean isFinished=false;
-        private Content.TVShow tvshow;
+        private TVShow tvshow;
         private long progress;
         private long totalLength;
 
@@ -115,11 +108,11 @@ public class WatchData {
 
 
 
-        public Content.TVShow getTvshow() {
+        public TVShow getTvshow() {
             return tvshow;
         }
 
-        public void setTvshow(Content.TVShow tvshow) {
+        public void setTvshow(TVShow tvshow) {
             this.tvshow = tvshow;
         }
 
@@ -138,7 +131,7 @@ public class WatchData {
                 }
 
 
-        public WatchSession(Integer video, Content.TVShow tvshow){
+        public WatchSession(Integer video, TVShow tvshow){
                  this.tvshow=tvshow;
                  this.video=video;
         }
@@ -148,7 +141,7 @@ public class WatchData {
         }
     }
 
-    public static WatchSession getMostRecentSession(Content.TVShow tvshow){
+    public static WatchSession getMostRecentSession(TVShow tvshow){
         if(watchSessions.size()!=0){
             for(int i=watchSessions.size()-1;i>=0;i--){
                 WatchSession session = watchSessions.get(i);

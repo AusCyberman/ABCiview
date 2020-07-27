@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.RecyclerView;
+
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,17 +12,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.abc.iview.Content;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
+import com.abc.iview.content.Content;
 import com.abc.iview.R;
 import com.abc.iview.activities.MainActivity;
 import com.abc.iview.activities.TVShowActivity;
+import com.abc.iview.content.TVShow;
+import com.bumptech.glide.Glide;
+
 
 import java.util.ArrayList;
 
 public class TVShowChannelAdapter extends RecyclerView.Adapter<TVShowChannelAdapter.TVShowViewHolder> {
 
     Activity fromclass;
-    ArrayList<Content.TVShow> tvshows = MainActivity.tvshows;
+    ArrayList<TVShow> tvshows = MainActivity.tvshows;
 
     Integer layout;
     //Activity  fromclass;
@@ -60,18 +64,18 @@ public class TVShowChannelAdapter extends RecyclerView.Adapter<TVShowChannelAdap
     @Override
     public void onBindViewHolder(@NonNull TVShowViewHolder holder, int position) {
         System.out.println(position);
-        final Content.TVShow tvShow = tvshows.get(position);
+        final TVShow tvShow = tvshows.get(position);
 
         assert tvShow != null;
         System.out.println("Adding "+tvShow.getName());
-        holder.imageView.setImageBitmap(tvShow.getImage());
+        Glide.with(context).load(tvShow.getImage()).into(holder.imageView);
         holder.tvshowNameView.setText(tvShow.getName());
         final Integer pos = position;
         final Context context = holder.context;
 
         holder.imageView.setOnClickListener(v -> {
             Intent intent = new Intent(context, TVShowActivity.class);
-            for(Content.TVShow tvshow : MainActivity.tvshows){
+            for(TVShow tvshow : MainActivity.tvshows){
                 if(tvShow.equals(tvShow)){
                     intent.putExtra("TVShowPosition",MainActivity.tvshows.indexOf(tvShow));
                     if(fragmentsource>10) {
@@ -133,7 +137,7 @@ public class TVShowChannelAdapter extends RecyclerView.Adapter<TVShowChannelAdap
         return tvshows.size();
     }
 
-public TVShowChannelAdapter(ArrayList<Content.TVShow> tvshows, Integer layout, Activity fromclass, Context context, Boolean makeTextBlack, Integer fragment){
+public TVShowChannelAdapter(ArrayList<TVShow> tvshows, Integer layout, Activity fromclass, Context context, Boolean makeTextBlack, Integer fragment){
     this.tvshows=tvshows;
     this.isTextBlack=makeTextBlack;
     this.layout = layout;

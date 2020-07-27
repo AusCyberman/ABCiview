@@ -2,32 +2,27 @@ package com.abc.iview.adapters
 
 import android.app.Activity
 import android.content.Context
-import android.support.constraint.ConstraintLayout
-import android.support.v4.view.ViewCompat
-import android.support.v7.widget.ContentFrameLayout
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log.println
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.widget.TextView
-
-import com.abc.iview.Content
-import com.abc.iview.R
-
-import com.abc.iview.activities.MainActivity
-
-import java.util.ArrayList
-
 import android.os.Handler
 
 
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.abc.iview.content.Content
+import com.abc.iview.R
+import com.abc.iview.activities.MainActivity
+import com.abc.iview.content.TVShow
+
+import java.util.*
 
 
-class MainMenuChannelListAdapter(tvshows: ArrayList<Content.TVShow>, categories: ArrayList<String>, fromclass: Activity, //  Activity  fromclass;
+class MainMenuChannelListAdapter(tvshows: ArrayList<TVShow>, categories: ArrayList<String>, fromclass: Activity, //  Activity  fromclass;
                                  private val context: Context, channel: String, internal var fragment: Int?) : RecyclerView.Adapter<MainMenuChannelListAdapter.MainMenuViewHolder>() {
-    internal var tvshows: ArrayList<Content.TVShow> = MainActivity.tvshows
+    internal var tvshows: ArrayList<TVShow> = MainActivity.tvshows
     internal var channel: String? = "abc"
     internal var categories = ArrayList<String>()
     var pool = RecyclerView.RecycledViewPool()
@@ -62,7 +57,7 @@ class MainMenuChannelListAdapter(tvshows: ArrayList<Content.TVShow>, categories:
 
 
         allRecyclerView = holder.recyclerView
-        val listTVshows = ArrayList<Content.TVShow>()
+        val listTVshows = ArrayList<TVShow>()
         val alltvshows = MainActivity.tvshows
         val category = categories[position]
                  System.out.println("Category is $category")
@@ -80,8 +75,8 @@ class MainMenuChannelListAdapter(tvshows: ArrayList<Content.TVShow>, categories:
 
 
         for (tvshow in alltvshows) {
-
-            if (tvshow.channel == channel || channel == "") {
+            if (tvshow != null) {
+            if (tvshow.channel == channel || channel == "" ) {
 
                 if (Content.categories.indexOf(categories[position]) == tvshow.category) {
 
@@ -96,7 +91,7 @@ class MainMenuChannelListAdapter(tvshows: ArrayList<Content.TVShow>, categories:
                 }
             }
 
-        }
+        }}
 
 
         // specify an adapter (see also next example)

@@ -6,30 +6,30 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+
 import android.transition.Slide;
-import android.view.ContextMenu;
+
+import android.util.LruCache;
 import android.view.Gravity;
-import android.view.MenuInflater;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.abc.iview.BitmapConversion;
-import com.abc.iview.Content;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import com.abc.iview.content.Content;
 import com.abc.iview.R;
+import com.abc.iview.content.TVShow;
 import com.abc.iview.fragments.ChannelsFragment;
 import com.abc.iview.fragments.FavouritesFragment;
 import com.abc.iview.fragments.HomeFragment;
 import com.abc.iview.fragments.SearchFragment;
 import com.abc.iview.fragments.SettingsFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,10 +37,10 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-//import android.support.design.widget.BottomNavigationView;
 
 
-public class MainActivity extends AppCompatActivity  implements HomeFragment.OnFragmentInteractionListener, FavouritesFragment.OnFragmentInteractionListener,ChannelsFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener, SearchFragment.OnFragmentInteractionListener {
+
+public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener, FavouritesFragment.OnFragmentInteractionListener,ChannelsFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener, SearchFragment.OnFragmentInteractionListener {
 
 
 
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
 
     public HashMap<Integer, ImageView> channelImages = new HashMap<Integer, ImageView>();
     public ArrayList<String> channelNames= new ArrayList<String>();
-    public static ArrayList<Content.TVShow> tvshows = new ArrayList<>();
+    public static ArrayList<TVShow> tvshows = new ArrayList<>();
     //public static ArrayList<Integer> tvshows = new ArrayList<>();
     public static ArrayList<Integer> favourites = new ArrayList<Integer>();
     public static boolean darkmode = false;
@@ -87,24 +87,45 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
 
 
     }
-
+    public static int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+    final int cacheSize = maxMemory / 8;
 
     MenuItem prevMenuItem;
 
+
+    //cache
+   public static LruCache<String, Bitmap> memoryCache;
+    public static void addBitmapToMemoryCache(String key, Bitmap bitmap) {
+        if (getBitmapFromMemCache(key) == null) {
+            memoryCache.put(key, bitmap);
+        }
+    }
+
+    public static Bitmap getBitmapFromMemCache(String key) {
+        return memoryCache.get(key);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //Set default fragment to homeFragment
 
         currentFragment= homeFragment;
 
 
-
         if (!hasstarted){
-
 
             hasstarted=true;
 
         }
-
+        //init cache
+        memoryCache = new LruCache<String, Bitmap>(cacheSize) {
+            @Override
+            protected int sizeOf(String key, Bitmap bitmap) {
+                // The cache size will be measured in kilobytes rather than
+                // number of items.
+                return bitmap.getByteCount() / 1024;
+            }
+        };
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
@@ -213,31 +234,6 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
 
 
 
-        /* (navigation.getSelectedItemId()){
-
-            case R.id.navigation_home:
-
-                mPager.setCurrentItem(0);
-                break;
-            case R.id.navigation_channels:
-                mPager.setCurrentItem(1);
-                break;
-            case R.id.navigation_search:
-                mPager.setCurrentItem(2);
-                break;
-            case R.id.navigation_favourites:
-                mPager.setCurrentItem(3);
-                break;
-
-            case R.id.navigation_settings:
-                mPager.setCurrentItem(4);
-
-
-        }*/
-
-
-
-
     }
 
     public void openChannel(View View) {
@@ -262,17 +258,18 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
 
 
     public static Integer newTVShow(String tvshow,String channel,Integer category, String classification,String imageURL,String description,Boolean popularity){
-        tvshows.add(new Content.TVShow(tvshow,category));
+        tvshows.add(new TVShow(tvshow,category));
 
         tvshows.get(tvshows.size()-1).setChannel(channel);
         tvshows.get(tvshows.size()-1).setClassification(classification);
-        new BitmapConversion().execute(imageURL, String.valueOf(tvshows.size()-1));
+        tvshows.get(tvshows.size()-1).setImage(imageURL);
 
         if(popularity){
             tvshows.get(tvshows.size()-1).makepopular();
         }
         tvshows.get(tvshows.size()-1).setDescription(description);
         tvshows.get(tvshows.size()-1).setId(tvshows.size()-1);
+
         return tvshows.size()-1;
 
 
@@ -331,6 +328,7 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
         //tvshows.get(0).getEpisode(3).setImage(R.drawable.deadlock_ep_4);
         tvshows.get(0).addEpisode(context,"Episode 5 Jed","Inseparable thrill-seeking identical twins, Ned and Jed Manos, are local legends known for their maniac stunts. Separated at the party, Ned has not come home, and Jed suspects he had something to do with the car accident.","m","https://www.youtube.com/watch?v=8Mg7030cLhg");
         //tvshows.get(0).getEpisode(4).setImage(R.drawable.deadlock_ep_5);
+      //  
         newTVShow("Bluey",
                 "abckids",
                 6,
@@ -339,6 +337,7 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
                 "Bluey is an inexhaustible six year-old Blue Heeler dog, who loves to play and turns everyday family life into extraordinary adventures, developing her imagination as well as her mental, physical and emotional resilience",
                 true
         );
+       // 
         newTVShow("Melbourne Comedy Festival",
                 "abccomedy",
                 1,
@@ -347,6 +346,7 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
                 "The Melbourne International Comedy Festival Events include the smash hit festival favourites such The Gala and the Allstar Supershow. Featuring a star-studded line-up of Aussie comedians and international talent.",
                 true
         );
+     //   
         newTVShow("Hardball",
                 "abcme",
                 6,
@@ -355,7 +355,9 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
                 "Hardball follows fish out of water Mikey and his two misfit mates, Salwa and Jerry. Their goal - Make Mikey the sweetest-bestest-acest handball champ Western Sydney's ever seen.",
                 true
         );
-        tvshows.get(3).setTrailer("https://www.youtube.com/watch?v=EW3bwU5zU48",context);
+
+      tvshows.get(3).setTrailer("https://www.youtube.com/watch?v=EW3bwU5zU48",context);
+       
         newTVShow("Planet America",
                 "abcnews",
                 9,
@@ -367,7 +369,7 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
         tvshows.get(4).addEpisode(context,"Friday 12/4/2019","As the US awaits his extradition, what's next for Wikileaks founder Julian Assange? Also, did American intelligence agencies really spy on Donald Trump? And where did it all go wrong? A Deep Dive into the crisis in Venezuela.","norating","http://www.youtube.com/watch?v=KAh1Ni7vhL8");
        // tvshows.get(4).getEpisode(0).setImage(R.drawable.planetamerica_fri_12);
         tvshows.get(4).addEpisode(context,"Friday 5/4/2019","Presidential frontrunner Joe Biden faces his own #MeToo moment. Plus NATOs uncertain future in the era of Trump, and the battle to protect free speech on college campuses.","norating","http://www.youtube.com/watch?v=aVsfNZwRGwE");
-
+        
         newTVShow("Rewind",
                 "abcarts",
                 0,
@@ -376,6 +378,7 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
                 "This archive-based series is a kaleidoscope of high art and pop culture programming from the 1960s to the noughties.",
                 true
         );
+        
         newTVShow("Good Game",
                 "iviewpresents",
                 0,
@@ -386,6 +389,7 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
 
         tvshows.get(6).addEpisode(context,"Sekiro Starter's Guide","Diving into the latest game from the developers behind Dark Souls and Bloodborne can be more than a bit daunting... So here's a quick guide with some tips to help you start out as a sneaky, stabby shinobi in Sekiro.","m","https://www.youtube.com/watch?v=q8c_EdW6I5s");
        // tvshows.get(6).getEpisode(0).setImage(R.drawable.goodgame_ep1);
+        
         newTVShow("Killing Eve",
                 "abc",
                 3,
@@ -394,7 +398,7 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
                 "https://cdn.iview.abc.net.au/thumbs/1200/ch/CH1861H_5c80bb9744c98.jpg",
                 "Bound by their obsession and a brutal act; Eve is reeling and Villanelle has disappeared and both of them are in deep trouble. Eve's hunt for Villanelle begins, but this time she's not the only one looking for her.",
                 true);
-
+        
 
         newTVShow("Secret Life of Boys",
                 "abcme",
@@ -405,6 +409,7 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
                 true);
         tvshows.get(8).addEpisode(context,"Ep 1 Just One Of The Boys","Ginger makes the long trip from Australia to the UK, so she can spend the summer with her cousins. After making a horrible first impression, Ginger finds it difficult to fit in with the four boys","g","https://www.youtube.com/watch?v=CkYSFxEJE54");
         tvshows.get(8).addEpisode(context,"Ep 2 Make Yourself At Home","The boys find out that Ginger is keeping a secret about her dad. After their parents leave for the afternoon, the boys use a game of Truth or Dare to try to coax the information out of her.","g","https://www.youtube.com/watch?v=0wnsAMpz7L0");
+        
         newTVShow("PJ Masks",
                 "abckids",
                 6,
@@ -413,6 +418,7 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
                 "The adventure continues for the PJ Masks as they embark on new missions with some brand-new superpowers. The old villians are back as well as new ones creating chaos but the PJ Masks are here to save the day!",
                 true);
         tvshows.get(9).setTrailer("https://www.youtube.com/watch?v=kmUx9cGUHzg",context);
+        
         newTVShow("Insiders",
                 "abcnews",
                 9,
@@ -420,7 +426,7 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
                 "https://cdn.iview.abc.net.au/thumbs/1200/nc/NC1909V_5d02e4403fb87_1280.jpg",
                 "Barrie Cassidy presents Australia's most popular political program. Insiders speaks with the key players, providing analysis, opinion and robust debate from the country's leading political commentators.",
                 true);
-
+        
 
     newTVShow("Peppa Pig",
             "abckids",
@@ -433,6 +439,10 @@ public class MainActivity extends AppCompatActivity  implements HomeFragment.OnF
                     "\n",
             "g",
             "https://www.youtube.com/watch?v=O_Ccbrka0_0");
+        
+
+    //System.out.println(gson.toJson(tvshows));
+
     }
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 

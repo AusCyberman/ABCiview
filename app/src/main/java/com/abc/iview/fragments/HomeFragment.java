@@ -4,19 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
-import com.abc.iview.Content;
-import com.abc.iview.Content.TVShow;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.abc.iview.content.TVShow;
 import com.abc.iview.R;
 
 import com.abc.iview.WatchData;
@@ -24,8 +22,8 @@ import com.abc.iview.activities.MainActivity;
 import com.abc.iview.adapters.MainMenuChannelListAdapter;
 import com.abc.iview.adapters.RecentlyWatchedAdapter;
 import com.abc.iview.adapters.TVShowChannelAdapter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
@@ -176,7 +174,7 @@ public class HomeFragment extends Fragment {
 
 
         for(TVShow tvshow : alltvshows) {
-
+            if(tvshow!=null){
 
 
             if (MainActivity.parentcontrols && tvshow.getAdult()) {
@@ -193,7 +191,7 @@ public class HomeFragment extends Fragment {
                 }
             }
 
-        }
+        }}
 
         System.out.println("Pop Show size "+populartvshows.size());
         // specify an adapter (see also next example)
@@ -213,7 +211,7 @@ public class HomeFragment extends Fragment {
 
             for(TVShow tvshow : alltvshows) {
 
-
+                if(tvshow!=null){
 
                     if(TVShow.categories.indexOf(category) ==tvshow.getCategory()){
 
@@ -231,7 +229,7 @@ public class HomeFragment extends Fragment {
 
                         }}
 
-            }
+            }}
         }
 
 
